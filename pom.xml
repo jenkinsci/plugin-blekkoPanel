@@ -1,0 +1,103 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+	   	<groupId>org.jvnet.hudson.plugins</groupId>
+	    	<artifactId>plugin</artifactId>
+	    	<version>1.326</version><!-- which version of Hudson is this plugin built against? -->
+	    	<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<artifactId>blekkoPanel</artifactId>
+	<packaging>hpi</packaging>
+	<name>Blekko Extreme Feedback Panel</name>
+	<version>1.0.10-SNAPSHOT</version>
+	<description>A modified version of Julien Renault's eXtreme Feedback plug that adds build date, build description, Mercurial revision, and test coverage to the display.</description>
+	<url>http://wiki.hudson-ci.org/display/HUDSON/Blekko+Extreme+Feedback+Plugin</url>
+	<developers>
+    		<developer>
+      			<id>pemungkah</id>
+      			<name>Joe McMahon</name>
+      			<email>joe.mcmahon@gmail.com</email>
+    		</developer>
+  	</developers>
+
+        <licenses>
+            <license>
+                <name>MIT License</name>
+                <comments>All source code is released under an MIT License.</comments>
+            </license>
+        </licenses>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.0.2</version>
+                    <configuration>
+                        <source>1.5</source>
+                        <target>1.5</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.0-beta-9</version>
+                    <configuration>
+                        <goals>deploy</goals>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.0</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.maven.scm</groupId>
+                            <artifactId>maven-scm-provider-gitexe</artifactId>
+                            <version>1.3</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.0-beta-9</version>
+                    <configuration>
+                        <goals>deploy</goals>
+                    </configuration>
+                </plugin>
+            </plugins>
+            <extensions>
+                <extension>
+                    <groupId>org.jvnet.wagon-svn</groupId>
+                    <artifactId>wagon-svn</artifactId>
+                    <version>1.9</version>
+                </extension>
+            </extensions>
+        </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.jvnet.hudson.plugins</groupId>
+            <artifactId>mercurial</artifactId>
+            <version>1.33</version>
+            <type>hpi</type>
+        </dependency>
+    </dependencies>
+    <repositories>
+        <repository>
+            <id>tek42.com</id>
+            <url>http://tek42.com/maven2</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <scm>
+        <connection>git://github.com/hudson/plugin-blekkoPanel.git</connection>
+        <developerConnection>scm:git:git@github.com:hudson/plugin-blekkoPanel.git</developerConnection>
+        <url>http://github.com/hudson/plugin-blekkoPanel/</url>
+    </scm>
+</project>

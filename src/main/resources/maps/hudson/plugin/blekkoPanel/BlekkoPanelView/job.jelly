@@ -1,0 +1,81 @@
+<j:jelly xmlns:j="jelly:core" 
+        xmlns:st="jelly:stapler"
+        xmlns:d="jelly:define"
+        xmlns:l="/lib/layout"
+        xmlns:t="/lib/hudson"
+        xmlns:f="/lib/form"
+        xmlns:i="jelly:fmt">
+    <j:choose>
+        <j:when test="${from.fullHD == true}">
+            <j:set var="height" value="165px" />
+            <j:set var="imgheight" value="138px" />
+            <j:set var="jobFont" value="90px" />
+            <j:set var="failFont" value="110px" />
+            <j:set var="infoFont" value="40px" />
+            <j:set var="buildFont" value="30px" />
+            <j:set var="lineHeight" value="30px" />
+        </j:when>
+        <j:otherwise>
+            <j:set var="height" value="205px" />
+            <j:set var="imgheight" value="194px" />
+            <j:set var="jobFont" value="140px" />
+            <j:set var="failFont" value="150px" />
+            <j:set var="infoFont" value="60px" />
+            <j:set var="buildFont" value="40px" />
+            <j:set var="lineHeight" value="40px" />
+        </j:otherwise>
+    </j:choose>
+    <j:choose>
+        <j:when test="${from.numColumns == 1}">
+            <j:set var="detailOffset" value="12px"/>
+        </j:when>
+        <j:otherwise>
+            <j:set var="detailOffset" value="20px"/>
+        </j:otherwise>
+    </j:choose>
+    <table align="center" style="margin: 4px; background-color:${job.backgroundColor}; -moz-border-radius:10px; width:${width}; height:${height}; float: ${float}" tooltip="${job.name}">
+        <tr>
+            <td>
+                <a style="text-decoration:none; float:left; white-space: nowrap; margin-top:-40px; font-size: ${jobFont}; font-weight:bold; color: ${job.color};" href="${job.url}">${job.name}</a>
+                <span STYLE="line-height=${lineHeight}; float:left; margin-left: 20px; color: ${job.color}; font-size: ${infoFont}; font-weight:bold;">
+                    <div>
+                        <j:choose>
+                            <j:when test="${from.dateStyle == 1}">${job.absoluteBuildDate}</j:when>
+                            <j:otherwise>${job.relativeBuildDate}</j:otherwise>
+                        </j:choose>
+                        (${job.buildDuration})
+                    </div>
+                    <div style="font-size: ${buildFont}; color:${job.revisionColor}; margin-top:-20px;">${job.lastSCMCommitID}</div>
+                </span>
+            </td>
+            <j:set var="failColor" value="#00FF00" />
+            <j:if test="${job.failCount > 0}">
+                <j:set var="failColor" value="#FF0000" />
+            </j:if>
+            <td rowspan="2" align="center" style="width: 20%; text-align=center; color: ${failColor}; font-size: ${failFont}; font-weight:bold;">
+                <j:if test="${job.broken == true}"><st:include page="warning.jelly" /></j:if>
+                <j:if test="${job.hasCoverage == true}">${job.coverage}</j:if>
+                <j:if test="${job.hasCoverage == false}">
+                    <j:if test="${job.broken == false}">
+                      <j:if test="${it.showZeroTestCounts == true}">${job.failCount}</j:if>
+                        <j:if test="${it.showZeroTestCounts == false}">
+                            <j:if test="${job.testCount > 0}">${job.failCount}</j:if>
+                        </j:if>
+                    </j:if>
+                </j:if>
+            </td>
+        </tr>
+        <tr valign="top">
+            <j:if test="${job.building == false}">
+                <td valign="top" style="color: ${job.color}; font-size: ${infoFont}; font-weight:bold; white-space: nowrap;">
+                    <span style="color: ${job.color}; font-size: ${buildFont}; font-weight:bold;"><st:include page="notBuilding.jelly" /></span>
+                </td>
+            </j:if>
+            <j:if test="${job.building == true}">
+                <td valign="top">
+                    <span style="color: ${job.color}; font-size: ${buildFont}; font-weight:bold;"><st:include page="building.jelly" /></span>
+                </td>
+            </j:if>
+        </tr>
+    </table>
+</j:jelly>

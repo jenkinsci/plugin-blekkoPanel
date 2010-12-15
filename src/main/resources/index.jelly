@@ -1,0 +1,8 @@
+<!-- 
+	Thanks to Julien Renault for his original eXtreme Feedback plugin.
+ -->
+<div>
+	Adds an extended extreme feedback view intended to be used on large panels to monitor the status of the selected jobs.
+        Shows build date and time, plus the Mercurial revision of the code checked out for the build and coverage percentage
+        extracted from the build description.
+</div>
